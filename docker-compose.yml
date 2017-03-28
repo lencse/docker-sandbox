@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+    php:
+        image: php:7.1-apache
+        volumes:
+            - ./:/app
+        working_dir: /app
+    composer:
+        image: composer
+        links:
+            - php
+        volumes:
+            - ./:/app
+        working_dir: /app
+    apache:
+        build: ./docker/apache
+        links:
+            - php
+        volumes:
+            - ./:/app
+        ports:
+            - '80:80'
+            - '443:443'
